@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="session_config_view_form" model="ir.ui.view">
+        <field name="name">session.config.form</field>
+        <field name="model">session.config</field>
+        <field name="arch" type="xml">
+            <form string="Material Master">
+                <header>
+                     <button name="start_session" string="Start Session" type="object" attrs="{'invisible': [('active_session', '=', True)]}"/>
+                    <button name="end_session" string="End Session" type="object" attrs="{'invisible': [('active_session', '=', False)]}"/>
+                </header>
+                <sheet>
+
+                    <group>
+                        <field name="name"/>
+                        <field name="active_session"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="session_config_view_tree" model="ir.ui.view">
+        <field name="name">session.config.tree</field>
+        <field name="model">session.config</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="session_config_action" model="ir.actions.act_window">
+        <field name="name">Sessions Config</field>
+        <field name="res_model">session.config</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!--    MenuItems added in Crm Configuration-->
+
+
+    <menuitem id="menu_session_config_action"
+              name="Session Config" parent="sales_session.menu_session_root" action="session_config_action"
+              sequence="1"/>
+</odoo>

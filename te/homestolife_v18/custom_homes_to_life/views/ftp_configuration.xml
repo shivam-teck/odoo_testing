@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="ftp_configuration_view_form" model="ir.ui.view">
+        <field name="name">ftp.configuration.view.form</field>
+        <field name="model">ftp.configuration</field>
+        <field name="arch" type="xml">
+            <form string="Material Master">
+                <sheet>
+                    <group>
+                        <field name="hostname"/>
+                        <field name="username"/>
+                        <field name="password"/>
+                        <field name="port"/>
+                        <field name="active_ftp"/>
+                    </group>
+                    <notebook>
+                     <page string="Import Logs" name="import_logs">
+                            <field name="file_transfer_ids" readonly="True">
+                                <list editable="bottom">
+                                    <field name="sale_order"/>
+                                    <field name="file_name"/>
+                                    <field name="status"/>
+                                    <field name="log_exception"/>
+                                    <field name="ftp_host"/>
+                                    <field name="export_time"/>
+                                    <field name="so_id" invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ftp_configuration_view_tree" model="ir.ui.view">
+        <field name="name">ftp.configuration.view.tree</field>
+        <field name="model">ftp.configuration</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="hostname"/>
+                <field name="username"/>
+                <field name="password"/>
+                <field name="port"/>
+                <field name="active_ftp" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ftp_configuration_action" model="ir.actions.act_window">
+        <field name="name">FTP Configuration</field>
+        <field name="res_model">ftp.configuration</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <!--    MenuItems added in Crm Configuration-->
+
+
+    <menuitem id="menu_ftp_configuration_action"
+              name="FTP Configuration" parent="sale.menu_sale_config" action="ftp_configuration_action"
+              sequence="21"/>
+</odoo>

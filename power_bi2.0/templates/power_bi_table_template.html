@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chheda Specialities Data View</title>
+
+    <!-- DataTables & Buttons CSS -->
+    <link rel="shortcut icon" href="https://chhedaspecialities.com/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.3.2/css/fixedColumns.dataTables.min.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css"/>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            color: #2c3e50;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .o_container {
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 10px;
+            margin: 0 auto;
+        }
+
+        #power_bi_table {
+            width: 100% !important;
+        }
+
+        #table_search_input {
+            width: 100% !important;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+            flex-grow: 1;
+            transition: background 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        .rainbow-header, .rainbow-button {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b, #ffcc33, #33ff77, #33ccff, #8e44ad, #ff416c);
+            background-size: 800% 800%;
+            animation: rainbowDiagonal 25s linear infinite;
+            color: white !important;
+        }
+
+        @keyframes rainbowDiagonal {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .rainbow-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease, color 0.3s;
+            flex-shrink: 0;
+        }
+
+        .rainbow-button:hover { transform: scale(1.05); }
+
+        .hamburger-btn {
+            font-size: 20px;
+            padding: 8px 12px;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-block;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-btn:hover { transform: scale(1.05); }
+
+        /* Column Popup */
+        .column-popup {
+            display: none;
+            position: absolute;
+            right: 20px;
+            top: 120px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            max-height: 400px;
+            overflow: hidden;
+            z-index: 9999;
+            width: 540px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.4s ease;
+        }
+
+        .column-popup.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .column-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            gap: 10px;
+        }
+
+        .column-actions button {
+            padding: 6px 12px;
+            font-size: 13px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .column-actions button:hover {
+            background: linear-gradient(45deg, #ffcc33, #33ff77);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #column_checkbox_list {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 20px;
+            overflow-x: auto;
+            max-height: 320px;
+            overflow-y: auto;
+            padding: 5px 0;
+        }
+
+        .column-section {
+            flex: 0 0 auto;
+            min-width: 240px;
+            padding: 8px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .column-section h5 { margin-bottom: 5px; font-size: 14px; color: #2c3e50; border-bottom: 1px solid #ccc; padding-bottom: 3px; }
+
+        .column-item { display: block; margin-bottom: 5px; cursor: pointer; opacity: 1; transform: translateY(0); transition: all 0.3s ease; }
+        .column-item.hide { opacity: 0; transform: translateY(-20px); }
+        .column-item.highlight { background: rgba(52, 152, 219, 0.15); border-radius: 6px; animation: highlightAnim 0.8s ease; }
+        @keyframes highlightAnim { 0% { background: rgba(52, 152, 219, 0.3); } 50% { background: rgba(52, 152, 219, 0.15); } 100% { background: rgba(52, 152, 219, 0); } }
+
+        table.dataTable tbody tr:hover { background: rgba(52, 152, 219, 0.1) !important; transform: translateY(-2px); }
+
+        #rowHoverPopup {
+            display: none;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 6px 10px;
+            font-size: 12px;
+            z-index: 9999;
+            max-width: 250px;
+            word-wrap: break-word;
+            backdrop-filter: blur(6px);
+            pointer-events: none;
+        }
+
+        .dt-button-excel-hidden { position: absolute !important; left: -9999px !important; top: -9999px !important; }
+
+        .welcome-text { text-align: center; font-size: 35px; font-weight: bold; margin-bottom: 5px; background-color: #1e1e1e; color: #ffffff; background-size: 400% 400%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientAnim 6s ease infinite; }
+        h2.title-text { text-align: center; font-weight: bold; font-size: 25px; background-color: #1e1e1e; color: #ffffff; background-size: 400% 400%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientAnim 8s ease infinite; }
+
+        body.dark-mode { background-color: #1e1e1e; color: #ffffff; }
+        body.dark-mode .welcome-text, body.dark-mode h2.title-text { background: none !important; -webkit-background-clip: unset !important; -webkit-text-fill-color: #ffffff !important; color: #ffffff !important; }
+        body.dark-mode .table-container { background-color: #2c2c2c; border-color: #555; }
+        body.dark-mode table.dataTable { background-color: #2c2c2c; color: #ffffff; }
+        body.dark-mode table.dataTable tbody tr:hover { background: rgba(52, 152, 219, 0.15) !important; }
+        body.dark-mode table.dataTable td { border-color: #555 !important; }
+        body.dark-mode table.dataTable thead tr.rainbow-header th { color: white !important; }
+        body.dark-mode .column-popup { background: #2c2c2c; border-color: #555; }
+        body.dark-mode .column-section { background: #3a3a3a; }
+        body.dark-mode .column-section h5, body.dark-mode .column-item { color: #ffffff !important; }
+        body.dark-mode .column-actions button { background: linear-gradient(45deg, #ff416c, #ff4b2b); color: white; }
+        body.dark-mode #table_search_input { background: #2c2c2c; color: #ffffff; border-color: #555; }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button { border-radius: 6px; padding: 5px 10px; margin: 0 2px; border: 1px solid transparent; cursor: pointer; transition: all 0.3s ease; }
+        body:not(.dark-mode) .dataTables_wrapper .dataTables_paginate .paginate_button { background: #ffffff; color: #2c3e50; border: 1px solid #ccc; }
+        body:not(.dark-mode) .dataTables_wrapper .dataTables_paginate .paginate_button.current { background: #2c3e50; color: #ffffff !important; }
+        body:not(.dark-mode) .dataTables_wrapper .dataTables_paginate .paginate_button:hover { background: #2c3e50; color: #ffffff !important; transform: scale(1.05); }
+        body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button { background: #3a3a3a; color: #ffffff; border: 1px solid #555; }
+        body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.current { background: #ff416c; color: #ffffff !important; }
+        body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button:hover { background: #ff4b2b; color: #ffffff !important; transform: scale(1.05); }
+
+        #loadingCircle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            z-index: 99999;
+            flex-direction: column;
+            backdrop-filter: blur(4px);
+        }
+
+        .progress-ring { transform: rotate(-90deg); }
+        .progress-ring__circle { stroke-dasharray: 188.4; stroke-dashoffset: 188.4; transition: stroke-dashoffset 0.2s ease, stroke 0.2s ease; filter: drop-shadow(0 0 6px red); }
+        #progressText { position: absolute; font-size: 16px; font-weight: bold; transition: color 0.25s ease; }
+
+        body.dark-mode #loadingCircle { background: rgba(30, 30, 30, 0.95); box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15); }
+    </style>
+</head>
+<body>
+
+<div class="o_container">
+
+    <!-- Loader -->
+    <div id="loadingCircle">
+        <svg class="progress-ring" width="70" height="70">
+            <circle class="progress-ring__background" stroke="#ddd" stroke-width="8" fill="transparent" r="30" cx="35" cy="35"/>
+            <circle class="progress-ring__circle" stroke="#ff0000" stroke-width="8" fill="transparent" r="30" cx="35" cy="35"/>
+        </svg>
+        <span id="progressText">0%</span>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <button id="darkModeBtn" style="position:absolute;top:10px;right:10px;padding:6px 12px;border:none;border-radius:8px;background:#444;color:white;cursor:pointer;">
+        🌙 Dark Mode
+    </button>
+
+    <div class="welcome-text">Welcome {{ user_name }}</div>
+    <h2 class="title-text">Data: {{ model_name }}</h2>
+
+    <!-- Search + Buttons -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:15px;">
+        <input type="text" id="table_search_input" placeholder="🔍 Search..."/>
+        <button id="excel_export_btn" class="rainbow-button excel-animate">
+            <span class="excel-icon">📊</span>
+            <span class="excel-text">Export to Excel</span>
+        </button>
+        <button id="column_toggle_btn" class="hamburger-btn">☰</button>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container" style="padding:10px;border-radius:12px;overflow-x:auto;">
+        <table id="power_bi_table" class="display nowrap stripe hover" style="width:100%!important;">
+            <thead>
+            <tr class="rainbow-header">
+                <th>Sr. No</th>
+                {% for col in columns %}
+                <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in table_data %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                {% for col in columns %}
+                <td>{{ row[col] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Column Toggle Popup -->
+<div id="column_toggle_popup" class="column-popup">
+    <h4>Select Columns</h4>
+    <div class="column-actions">
+        <button id="select_all_cols">Select All</button>
+        <button id="deselect_all_cols">Deselect All</button>
+    </div>
+    <div id="column_checkbox_list"></div>
+</div>
+
+<div id="rowHoverPopup"></div>
+
+<!-- JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/4.3.2/js/dataTables.fixedColumns.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+
+<script>
+$(document).ready(function () {
+
+    // ===== Loader Setup =====
+    const radius = 30;
+    const circumference = 2 * Math.PI * radius;
+    const circle = document.querySelector('.progress-ring__circle');
+    const progressText = document.getElementById('progressText');
+    circle.style.strokeDasharray = circumference;
+    circle.style.strokeDashoffset = circumference;
+
+    function setProgress(percent) {
+        const offset = circumference - (percent / 100) * circumference;
+        circle.style.strokeDashoffset = offset;
+
+        let color = percent <= 30 ? "#ff0000" : percent <= 80 ? "#ffcc00" : "#28a745";
+        circle.style.stroke = color;
+        circle.style.filter = `drop-shadow(0 0 8px ${color})`;
+        progressText.style.color = color;
+        progressText.textContent = percent + "%";
+    }
+
+    // ===== Initialize DataTable =====
+    var table = $('#power_bi_table').DataTable({
+        pageLength: 1000,
+        lengthChange: false,
+        searching: true,
+        ordering: true,
+        paging: true,
+        scrollX: true,
+        responsive: true,
+        fixedHeader: true,
+        dom: 'Bfrtip',
+        buttons: [{
+            extend: 'excelHtml5',
+            title: "{{ model_name }}",
+            exportOptions: {columns: ':visible'},
+            text: '',
+            className: 'dt-button-excel-hidden'
+        }],
+        fixedColumns: {leftColumns: 1},
+        drawCallback: function () {
+            // Update loader progress based on visible rows
+            const totalRows = $('#power_bi_table tbody tr').length;
+            const drawnRows = $('#power_bi_table tbody tr').length;
+            const percent = Math.round((drawnRows / totalRows) * 100);
+            setProgress(percent);
+            if (percent >= 100) $('#loadingCircle').fadeOut(500);
+        }
+    });
+
+    $('#power_bi_table_filter').hide();
+
+    // ===== Real-time progress loader =====
+    const totalRows = $('#power_bi_table tbody tr').length;
+    let drawnRows = 0;
+    $('#power_bi_table tbody tr').each(function (i, row) {
+        setTimeout(() => {
+            drawnRows++;
+            const percent = Math.round((drawnRows / totalRows) * 100);
+            setProgress(percent);
+            if (percent >= 100) $('#loadingCircle').fadeOut(500);
+        }, i * 10); // 10ms per row for real-time effect
+    });
+
+    // ===== Search =====
+    $('#table_search_input').on('keyup', function () { table.search(this.value).draw(); });
+
+    // ===== Excel Export =====
+    $('#excel_export_btn').on('click', function () {
+        var btn = $(this);
+        var icon = btn.find('.excel-icon');
+        var text = btn.find('.excel-text');
+        icon.text('⏳'); text.text('Preparing...');
+        setTimeout(function () {
+            table.button(0).trigger();
+            icon.text('✅'); text.text('Downloaded!');
+            setTimeout(function () { icon.text('📊'); text.text('Export to Excel'); }, 1500);
+        }, 500);
+    });
+
+    // ===== Column Toggle =====
+    function buildColumnList() {
+        $('#column_checkbox_list').empty();
+        var visibleSection = $('<div class="column-section"><h5>Visible</h5></div>');
+        var hiddenSection = $('<div class="column-section"><h5>Hidden</h5></div>');
+        table.columns().every(function (index) {
+            if (index === 0) return;
+            var colName = $(this.header()).text();
+            var isVisible = this.visible();
+            var checkbox = $('<label class="column-item"><input type="checkbox" data-index="' + index + '" ' + (isVisible ? 'checked' : '') + '> ' + colName + '</label>');
+            checkbox.find('input').on('change', function () { table.column(index).visible(this.checked); checkbox.addClass('highlight'); checkbox.addClass(this.checked ? '' : 'hide'); setTimeout(function () { if (!checkbox.find('input').prop('checked')) checkbox.appendTo(hiddenSection).removeClass('hide highlight'); else checkbox.appendTo(visibleSection).removeClass('highlight hide'); }, 300); });
+            if (isVisible) visibleSection.append(checkbox); else hiddenSection.append(checkbox);
+        });
+        $('#column_checkbox_list').append(visibleSection, hiddenSection);
+    }
+
+    buildColumnList();
+    $('#select_all_cols').click(function () { $('#column_checkbox_list input[type="checkbox"]').prop('checked', true).trigger('change'); });
+    $('#deselect_all_cols').click(function () { $('#column_checkbox_list input[type="checkbox"]').prop('checked', false).trigger('change'); });
+    $('#column_toggle_btn').click(function () { $('#column_toggle_popup').toggleClass('show'); });
+    $(document).click(function (e) { if (!$(e.target).closest('#column_toggle_popup, #column_toggle_btn').length) $('#column_toggle_popup').removeClass('show'); });
+
+    // ===== Row Hover Popup =====
+    const rowPopup = $('#rowHoverPopup');
+    $('#power_bi_table tbody').on('mouseenter', 'td', function () {
+        var cellValue = $(this).text().trim(); if (!cellValue) return;
+        var columnName = $(this).closest('table').find('th').eq($(this).index()).text();
+        var popupContent = '<div class="popup-inner"><div><strong>' + columnName + ':</strong> ' + cellValue + '</div></div>';
+        var cellOffset = $(this).offset(); var cellHeight = $(this).outerHeight();
+        rowPopup.stop(true, true).html(popupContent).css({display: 'block', position: 'absolute', top: cellOffset.top + cellHeight + 5, left: cellOffset.left, transform: 'scale(0.95)', opacity: 0}).animate({opacity: 1}, {duration: 200, step: function (now, fx) { if (fx.prop === "opacity") $(this).css("transform", "scale(" + (0.95 + now * 0.05) + ")"); }});
+    });
+    $('#power_bi_table tbody').on('mouseleave', 'td', function () { rowPopup.stop(true, true).fadeOut(150); });
+
+    // ===== Dark Mode =====
+    const darkModeBtn = document.getElementById("darkModeBtn");
+    if (localStorage.getItem("darkMode") === "true") { document.body.classList.add("dark-mode"); darkModeBtn.textContent = "☀️ Light Mode"; }
+    darkModeBtn.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+        const isDark = document.body.classList.contains("dark-mode");
+        localStorage.setItem("darkMode", isDark);
+        darkModeBtn.textContent = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
+    });
+});
+</script>
+
+</body>
+</html>

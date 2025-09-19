@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_crm_lead_tree_inherited" model="ir.ui.view">
+        <field name="name">crm.lead.tree.inherited</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="inside">
+                <field name="call_status" optional="show" widget="badge"
+                       decoration-muted="call_status == '1st_call'"
+                       decoration-info="call_status == '2nd_call'"
+                       decoration-success="call_status == '3rd_call'"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_crm_kanban_view" model="ir.ui.view">
+        <field name="name">inherit.crm.kanban.view</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr='//kanban' position='attributes'>
+                <attribute name="create">false</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="inherit_crm_lead_form" model="ir.ui.view">
+        <field name="name">inherit.crm.lead.form</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//form/sheet/notebook/page[@name='internal_notes']/field[@name='description']"
+                   position="after">
+                <field name="memo"/>
+            </xpath>
+            <xpath expr="//form/sheet/notebook/page[@name='internal_notes']/field[@name='description']"
+                   position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//form/sheet/group/group[1]/field[@name='website']" position="after">
+                <field name="sale_staff" options="{'no_create': True}"/>
+                <field name="is_ho_account" invisible="1"/>
+            </xpath>
+            <xpath expr="//form/sheet/group/group[2]/field[@name='partner_phone_update']" position="after">
+                <field name="sale_staff" options="{'no_create': True}"/>
+            </xpath>
+            <!--            <xpath expr="//form/sheet/group/group[2]/field[@name='partner_id']" position="after">-->
+            <!--                <field name="sale_staff" options="{'no_create': True}" attrs="{'required': [('is_ho_account', '=', False)]}"/>-->
+            <!--            </xpath>-->
+            <xpath expr="//page[@name='extra']//field[@name='message_bounce']" position="after">
+                <field name="campaign_name"/>
+                <field name="ad_name"/>
+                <field name="ad_set_name"/>
+                <field name="product_interested"/>
+                <field name="budget"/>
+                <field name="platform"/>
+                <field name="buy_time"/>
+            </xpath>
+            <xpath expr="//page[@name='extra']//field[@name='source_id']" position="after">
+                <field name="meta_lead_id"/>
+            </xpath>
+            <xpath expr="//group[@name='lead_priority']/field[@name='tag_ids']" position="after">
+                <field name="call_status"/>
+            </xpath>
+            <xpath expr="//field[@name='source_id']" position="attributes">
+                <attribute name="domain">[('medium_id', '=', medium_id)]</attribute>
+            </xpath>
+        </field>
+    </record>
+    <menuitem
+            id="crm.crm_menu_sales"
+            name="Sales"
+            parent="crm.crm_menu_root"
+            sequence="10"/>
+    <menuitem
+            id="crm.crm_menu_leads"
+            name="Leads"
+            parent="crm.crm_menu_root"
+            action="crm.crm_lead_all_leads"
+            groups="crm.group_use_lead"
+            sequence="1"/>
+</odoo>

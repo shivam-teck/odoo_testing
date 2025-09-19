@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Credit note template -->
+    <record id="email_template_mtd_report" model="mail.template">
+        <field name="name">MTD Report: Send By Email</field>
+        <field name="model_id" ref="custom_homes_to_life.model_mtd_report"/>
+        <field name="email_from">aditya@planet-odoo.com</field>
+        <field name="email_to">sanmeet@planet-odoo.com</field>
+        <field name="subject">MTD Report of - {{ object.todays_date.date() }}</field>
+        <field name="description">Sent to customers with the credit note in attachment</field>
+        <field name="body_html" type="html">
+            <p>Daily CRM MTD report Homestolife</p>
+            <table style="width:70%;border:1px solid">
+                <tr>
+                    <td colspan="4" style="border-bottom:1px solid;text-align:center">
+                        <span>HOMESTOLIFE.MUM</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="border-bottom:1px solid;border-collapse: collapse;text-align:center">
+                        <span>Date:
+                            <t t-out="object.todays_date"/>
+                        </span>
+                    </td>
+                </tr>
+                <tr style="border-bottom:1px solid;border-right:1px solid">
+                            <th style="border-right:1px solid; width:25%;border-bottom:1px solid"></th>
+                            <th style="border-right:1px solid; width:15%;text-align:center;border-bottom:1px solid"><span>Today</span></th>
+                            <th style="border-right:1px solid; width:15%;text-align:center;border-bottom:1px solid"><span>MTD</span></th>
+                            <th style="width:15%;text-align:center;border-bottom:1px solid"><span>YTD</span></th>
+                        </tr>
+                 <tr style="border-bottom:1px solid;border-bottom:1px solid">
+                     <th style="border-right:1px solid;border-bottom:1px solid"><span>No of Walking</span></th>
+                            <td style="border-right:1px solid;border-bottom:1px solid"><span t-out="object.day_walking"/></td>
+                            <td style="border-right:1px solid;border-bottom:1px solid"><span t-out="object.mtd_walking"/></td>
+                            <td style="border-bottom:1px solid"><span t-out="object.ytd_walking"/></td>
+                        </tr>
+                 <tr style="border-bottom:1px solid;border-bottom:1px solid">
+                     <th style="border-right:1px solid;border-bottom:1px solid"><span>No of Leads</span></th>
+                            <td style="border-right:1px solid;border-bottom:1px solid"><span t-out="object.today_lead"/></td>
+                            <td style="border-right:1px solid;border-bottom:1px solid"><span t-out="object.mtd_lead"/></td>
+                            <td style="border-bottom:1px solid"><span t-out="object.ytd_lead"/></td>
+                        </tr>
+
+                <tr style="border-bottom:1px solid">
+                    <th style="border-right:1px solid;border-bottom:1px solid"><span>Number of Opportunity</span></th>
+                            <td style="border-right:1px solid;border-bottom:1px solid"><span t-out="object.opp_created"/></td>
+                            <td style="border-right:1px solid;border-bottom:1px solid"><span t-out="object.mtd_opp_created"/></td>
+                            <td style="border-bottom:1px solid"><span t-out="object.ytd_opp_created"/></td>
+                        </tr>
+                <tr style="border-bottom:1px solid">
+                    <th style="border-right:1px solid;border-bottom:1px solid"><span>Value of Opportunity</span></th>
+                            <td style="border-right:1px solid;border-bottom:1px solid"><span t-out="object.value_new_opp"/></td>
+                            <td style="border-right:1px solid;border-bottom:1px solid"><span t-out="object.mtd_value_opportunity"/></td>
+                            <td style="border-bottom:1px solid"><span t-out="object.ytd_value_opportunity"/></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid;border-bottom:1px solid">
+                            <th style="border-right:1px solid;border-bottom:1px solid"><span>Revenue</span></th>
+                            <td style="border-right:1px solid;border-bottom:1px solid"><span t-out="object.day_revenue"/></td>
+                            <td style="border-right:1px solid;border-bottom:1px solid"><span t-out="object.mtd_revenue"/></td>
+                            <td style="border-bottom:1px solid"><span t-out="object.ytd_revenue"/></td>
+                        </tr>
+                <tr style="border-bottom:1px solid">
+                    <th style="border-right:1px solid;border-bottom:1px solid"><span>Number of Quotation Send</span></th>
+                            <td style="border-right:1px solid;border-bottom:1px solid"><span t-out="object.day_quotation_count"/></td>
+                            <td style="border-right:1px solid;border-bottom:1px solid"><span t-out="object.mtd_quotation_count"/></td>
+                            <td style="border-bottom:1px solid"><span t-out="object.ytd_quotation_count"/></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid">
+                            <th style="border-right:1px solid;border-bottom:1px solid"><span>Number of Quotation Value</span></th>
+                            <td style="border-right:1px solid;border-bottom:1px solid"><span t-out="object.day_quotation_value"/></td>
+                            <td style="border-right:1px solid;border-bottom:1px solid"><span t-out="object.mtd_quotation_value"/></td>
+                            <td style="border-bottom:1px solid"><span t-out="object.ytd_quotation_value"/></td>
+                        </tr>
+                <tr style="border-bottom:1px solid">
+                            <th style="border-right:1px solid;border-bottom:1px solid"><span>Billing</span></th>
+                            <td style="border-right:1px solid;border-bottom:1px solid"><span t-out ="object.day_invoice_amount"/></td>
+                            <td style="border-right:1px solid;border-bottom:1px solid"><span t-out ="object.mtd_invoice_amount"/></td>
+                            <td style="border-bottom:1px solid"><span t-out ="object.ytd_invoice_amount"/></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid">
+                            <th style="border-right:1px solid;border-bottom:1px solid"><span>Google Rating</span></th>
+                            <td style="border-right:1px solid;border-bottom:1px solid"><span t-out ="object.day_rating"/></td>
+                            <td style="border-right:1px solid;border-bottom:1px solid"><span t-out ="object.mtd_rating"/></td>
+                            <td style="border-bottom:1px solid"><span t-out ="object.ytd_rating"/></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid">
+                            <th style="border-right:1px solid"><span>Instagram Followers</span></th>
+                            <td style="border-right:1px solid"><span t-out ="object.day_follower"/></td>
+                            <td style="border-right:1px solid"><span t-out ="object.mtd_follower"/></td>
+                            <td><span t-out ="object.ytd_follower"/></td>
+                        </tr>
+            </table>
+        </field>
+    </record>
+    <record id="schedule_action_mtd_report" model="ir.cron">
+        <field name="name">MTD Report</field>
+        <field name="model_id" ref="model_mtd_report"/>
+        <field name="state">code</field>
+        <field name="code">model.send_email()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">2</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+<!--        <field name="numbercall">-1</field>-->
+    </record>
+</odoo>
+

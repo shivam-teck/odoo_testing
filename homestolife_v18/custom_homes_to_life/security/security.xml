@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="group_access_product_import" model="res.groups">
+        <field name="name">Import Products And Prices</field>
+    </record>
+    <record id="group_access_report" model="res.groups">
+        <field name="name">View Report</field>
+    </record>
+    <record id="group_access_discount" model="res.groups">
+        <field name="name">Discount</field>
+    </record>
+    <record id="group_access_duplicate_discount" model="res.groups">
+        <field name="name">Duplicate Discount</field>
+    </record>
+    <record id="group_sale_order_confirm" model="res.groups">
+        <field name="name">Sale Order Confirm</field>
+    </record>
+    <record id="group_access_unit_price" model="res.groups">
+        <field name="name">Access Unit Price</field>
+    </record>
+    <record id="group_access_ftp" model="res.groups">
+        <field name="name">Send To FTP</field>
+    </record>
+
+    <record id="group_access_material_master" model="res.groups">
+        <field name="name">Material Master</field>
+    </record>
+
+    <record id="group_show_unlock_button" model="res.groups">
+        <field name="name">Show Unlock Button</field>
+    </record>
+
+</odoo>

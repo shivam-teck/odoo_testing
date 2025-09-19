@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+session_session,session.session,model_session_session,,1,1,1,1
+session_config,session.config,model_session_config,,1,1,1,1

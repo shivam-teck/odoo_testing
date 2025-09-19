@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="inherit_sale_order_line_view" model="ir.ui.view">
+        <field name="name">inherit.sale.order.line.view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form//header/button[@id='action_confirm']" position="attributes">
+                <attribute name="groups">custom_homes_to_life.group_sale_order_confirm</attribute>
+            </xpath>
+            <xpath expr="//form//header//button[@id='action_confirm']" position="after">
+                <button name="send_so" string="Send to FTP" type="object"
+                        invisible="hide_ftp_button or state not in ['done','sale']"
+                        groups="custom_homes_to_life.group_access_ftp"/>
+            </xpath>
+            <xpath expr="//form/sheet/group/group[2]/field[@name='payment_term_id']" position="after">
+                <field name="send_to_ftp" invisible="hide_ftp_button == True"/>
+            </xpath>
+            <xpath expr="//form/sheet/group/group[2]/field[@name='payment_term_id']" position="after">
+                <field name="so_change_date" invisible="1"/>
+                <field name="is_change_so" invisible="1"/>
+                <field name="hide_ftp_button" invisible="1"/>
+                <field name="is_ho_account" invisible="1"/>
+                <field name="oc_no"/>
+            </xpath>
+            <xpath expr="//notebook//page/field[@name='order_line']/list/field[@name='product_template_id']"
+                   position="after">
+                <field name="article1" options="{'no_create': True ,'no_open': 1}"
+                       required="is_case_good == False"/>
+
+                <field name="articletype_2" options="{'no_create': True,'no_open': 1}"
+                       required="is_case_good == False"/>
+                <field name="is_case_good" invisible="1"/>
+            </xpath>
+            <xpath expr="//notebook//page/field[@name='order_line']/list/field[@name='product_template_id']"
+                   position="attributes">
+                <attribute name="options">{'no_create_edit': True, 'no_create':True}</attribute>
+            </xpath>
+            <xpath expr="//notebook//page/field[@name='order_line']/list/field[@name='tax_id']"
+                   position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//notebook//page/field[@name='order_line']/list/field[@name='tax_id']"
+                   position="after">
+                <field name="additional_discount" groups="custom_homes_to_life.group_access_report"/>
+                <field name="product_location_type" invisible="1"/>
+                <field name="view_discount" groups="custom_homes_to_life.group_access_duplicate_discount"/>
+            </xpath>
+            <xpath expr="//notebook//page/field[@name='order_line']/list/field[@name='route_id']"
+                   position="after">
+                <field name="company_id" invisible="1"/>
+                <field name="route" optional="hide"/>
+            </xpath>
+            <xpath expr="//notebook//page/field[@name='order_line']/list/field[@name='price_unit']"
+                   position="before">
+                <field name="mrp_price" groups="custom_homes_to_life.group_access_report"/>
+                <field name="is_ho_account" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//sheet/notebook/page/field[@name='order_line']/list/field[@name='price_unit']"
+                   position="attributes">
+                <attribute name="readonly">is_ho_account == True</attribute>
+            </xpath>
+            <xpath expr="//notebook//page/field[@name='order_line']/list/field[@name='route_id']" position="attributes">
+                <attribute name="optional">show</attribute>
+            </xpath>
+            <xpath expr="//notebook//page/field[@name='order_line']/list/field[@name='discount']"
+                   position="attributes">
+                <attribute name="groups">custom_homes_to_life.group_access_discount</attribute>
+                <attribute name="readonly">0</attribute>
+                <attribute name="force_save">True</attribute>
+            </xpath>
+            <!--            <xpath expr="//notebook//page[@name='other_information']//group[@name='sale_shipping']/div/field[@name='commitment_date']"-->
+            <!--                   position="attributes">-->
+            <!--                <attribute name="attrs">{'required': [('state', '=', 'sale')]}</attribute>-->
+            <!--            </xpath>-->
+            <xpath expr="//form/sheet/group/group[2]/field[@name='oc_no']" position="after">
+                <field name="commitment_date" readonly="0"/>
+                <field name="sale_staff" required="is_ho_account == False" readonly="0"/>
+
+            </xpath>
+            <!--            <xpath expr="//notebook//page[@name='other_information']/group/group[1]/field[@name='user_id']"-->
+            <!--                   position="after">-->
+            <!--                <field name="sale_staff" attrs="{'required': [('is_ho_account', '=', False)]}" readonly="0"/>-->
+            <!--            </xpath>-->
+            <xpath expr="//page[@name='customer_signature']" position="after">
+                <page name="ftp_logs" string="File Transfer Log">
+                    <field name="ftp_log_ids">
+                        <list create="false" delete="false">
+                            <field name="sale_order" invisible="1" readonly="1"/>
+                            <field name="so_id" readonly="1"/>
+                            <field name="status" readonly="1"/>
+                            <field name="log_exception" readonly="True"/>
+                            <field name="ftp_host" readonly="True"/>
+                            <field name="export_time" readonly="1"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="display_so_name"/>
+            </xpath>
+            <xpath expr="//field[@name='origin']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="inherit_sale_order_list_view" model="ir.ui.view">
+        <field name="name">inherit.sale.order.tree.view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="inside">
+                <!--                <header>-->
+                <!--                    <button name="send_so" string="Export To FTP" class="btn btn-primary" type="object"/>-->
+                <!--                </header>-->
+            </xpath>
+            <xpath expr="//list/field[@name='amount_total']" position="before">
+                <field name="total_amount_received"/>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="action_sale_order_line" model="ir.actions.act_window">
+        <field name="name">Line Items</field>
+        <field name="res_model">sale.order.line</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Log.
+            </p>
+        </field>
+    </record>
+    <record id="inherit_sale_order_line_tree_view" model="ir.ui.view">
+        <field name="name">inherit.sale.order.line.tree.view</field>
+        <field name="model">sale.order.line</field>
+        <field name="inherit_id" ref="sale.view_order_line_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="field[@name='order_partner_id']" position="after">
+                <field name="customer_phone_no"/>
+            </xpath>
+            <xpath expr="field[@name='salesman_id']" position="before">
+                <field name="product_template_id"/>
+            </xpath>
+            <xpath expr="field[@name='order_id']" position="after">
+                <field name="route"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="inherit_product_pricelist_view" model="ir.ui.view">
+        <field name="name">inherit.product.pricelist.view</field>
+        <field name="model">product.pricelist</field>
+        <field name="inherit_id" ref="product.product_pricelist_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group/group/field[@name='company_id']" position="after">
+                <field name="is_default_pricelist"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!--    <record id="inherit_sale_stock_view" model="ir.ui.view">-->
+    <!--        <field name="name">inherit.sale.sock.view</field>-->
+    <!--        <field name="model">sale.order.line</field>-->
+    <!--        <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <xpath expr="//field[@name='route_id']" position="attributes">-->
+    <!--                <attribute name="optional">show</attribute>-->
+    <!--            </xpath>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <menuitem id="menu_sale_order_line"
+              name="Sale Order Line Item"
+              action="custom_homes_to_life.action_sale_order_line"
+              parent="sale.sale_order_menu"
+              sequence="50"/>
+</odoo>

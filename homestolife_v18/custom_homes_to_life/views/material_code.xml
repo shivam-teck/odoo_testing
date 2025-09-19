@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="material_code_view_form" model="ir.ui.view">
+        <field name="name">material.code.view.form</field>
+        <field name="model">material.code</field>
+        <field name="arch" type="xml">
+            <form string="Material Code">
+                <sheet>
+                    <group>
+                        <field name="material_code"/>
+                        <field name="margin"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="material_code_view_tree" model="ir.ui.view">
+        <field name="name">material.code.view.tree</field>
+        <field name="model">material.code</field>
+        <field name="arch" type="xml">
+            <tree string="Material Code">
+                <field name="material_code"/>
+                <field name="margin"/>
+            </tree>
+        </field>
+    </record>
+       <record id="material_code_action" model="ir.actions.act_window">
+        <field name="name">Material Code</field>
+        <field name="res_model">material.code</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!--    MenuItems added in Crm Configuration-->
+
+
+    <menuitem id="menu_material_code"
+              name="Material Code" parent="sale.menu_sale_config" action="material_code_action"
+              sequence="22"/>
+</odoo>

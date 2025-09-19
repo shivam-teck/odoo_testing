@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="mtd_report_form" model="ir.ui.view">
+        <field name="name">mtd.report.form</field>
+        <field name="model">mtd.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="todays_date"/>
+                        <field name="day_walking" invisible="1"/>
+                        <field name="mtd_walking" invisible="1"/>
+                        <field name="ytd_walking" invisible="1"/>
+                        <field name="start_date" invisible="1"/>
+                        <field name="last_date" invisible="1"/>
+                        <field name="opp_created" invisible="1"/>
+                        <field name="active_opportunity" invisible="1"/>
+                        <field name="value_new_opp" invisible="1"/>
+                        <field name="mtd_value_opportunity" invisible="1"/>
+                        <field name="day_invoice" invisible="1"/>
+                        <field name="mtd_invoice" invisible="1"/>
+                        <field name="day_revenue" invisible="1"/>
+                        <field name="mtd_revenue" invisible="1"/>
+                        <field name="first_date_year" invisible="1"/>
+                    </group>
+
+                    <table style="border:1px solid; width:70%">
+                        <tr style="border-bottom:1px solid">
+                            <th style="border-right:1px solid; width:25%"></th>
+                            <th style="border-right:1px solid; width:15%">Today</th>
+                            <th style="border-right:1px solid; width:15%">MTD</th>
+                            <th style="border:1px solid;width:15%">YTD</th>
+                        </tr>
+                        <tr style="border-bottom:1px solid">
+                            <th style="border-right:1px solid">No of Walking</th>
+                            <td style="border-right:1px solid"><field name="day_walking"/></td>
+                            <td style="border-right:1px solid"><field name="mtd_walking"/></td>
+                            <td><field name="ytd_walking"/></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid">
+                            <th style="border-right:1px solid">No of Leads</th>
+                            <td style="border-right:1px solid"><field name="today_lead"/></td>
+                            <td style="border-right:1px solid"><field name="mtd_lead"/></td>
+                            <td><field name="ytd_lead"/></td>
+                        </tr>
+
+                        <tr style="border-bottom:1px solid">
+                            <th style="border-right:1px solid">Number of Opportunity</th>
+                            <td style="border-right:1px solid"><field name="opp_created"/></td>
+                            <td style="border-right:1px solid"><field name="mtd_opp_created"/></td>
+                            <td><field name="ytd_opp_created"/></td>
+                        </tr>
+                         <tr style="border-bottom:1px solid">
+                            <th style="border-right:1px solid">Value of Opportunity</th>
+                            <td style="border-right:1px solid"><field name="value_new_opp"/></td>
+                            <td style="border-right:1px solid"><field name="mtd_value_opportunity"/></td>
+                            <td><field name="ytd_value_opportunity"/></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid">
+                            <th style="border-right:1px solid">Revenue</th>
+                            <td style="border-right:1px solid"><field name="day_revenue"/></td>
+                            <td style="border-right:1px solid"><field name="mtd_revenue"/></td>
+                            <td><field name="ytd_revenue"/></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid">
+                            <th style="border-right:1px solid">Number of Quotation Send</th>
+                            <td style="border-right:1px solid"><field name="day_quotation_count"/></td>
+                            <td style="border-right:1px solid"><field name="mtd_quotation_count"/></td>
+                            <td><field name="ytd_quotation_count"/></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid">
+                            <th style="border-right:1px solid">Number of Quotation Value</th>
+                            <td style="border-right:1px solid"><field name="day_quotation_value"/></td>
+                            <td style="border-right:1px solid"><field name="mtd_quotation_value"/></td>
+                            <td><field name="ytd_quotation_value"/></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid">
+                            <th style="border-right:1px solid">Billing</th>
+                            <td style="border-right:1px solid"><field name="day_invoice_amount"/></td>
+                            <td style="border-right:1px solid"><field name="mtd_invoice_amount"/></td>
+                            <td><field name="ytd_invoice_amount"/></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid">
+                            <th style="border-right:1px solid">Google Rating</th>
+                            <td style="border-right:1px solid"><field name="day_rating"/></td>
+                            <td style="border-right:1px solid"><field name="mtd_rating"/></td>
+                            <td><field name="ytd_rating"/></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid">
+                            <th style="border-right:1px solid">Instagram Followers</th>
+                            <td style="border-right:1px solid"><field name="day_follower"/></td>
+                            <td style="border-right:1px solid"><field name="mtd_follower"/></td>
+                            <td><field name="ytd_follower"/></td>
+                        </tr>
+                    </table>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_mtd_report" model="ir.actions.act_window">
+        <field name="name">MTD Report</field>
+        <field name="res_model">mtd.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_crm_mtd_report"
+              name="MTD Report" parent="crm.crm_menu_report" action="action_mtd_report"
+              groups="custom_homes_to_life.group_access_report"
+              sequence="2"/>
+
+</odoo>

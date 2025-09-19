@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="walking_view_form" model="ir.ui.view">
+        <field name="name">walking.view.form</field>
+        <field name="model">walking.walking</field>
+        <field name="arch" type="xml">
+            <form string="Daily Interaction">
+                <sheet>
+                    <group>
+                        <field name="walking_count"/>
+                        <field name="walking_date"/>
+                        <field name="google_rating"/>
+                        <field name="instagram_followers"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="walking_view_tree" model="ir.ui.view">
+        <field name="name">walking.view.tree</field>
+        <field name="model">walking.walking</field>
+        <field name="arch" type="xml">
+            <list string="Daily Interaction" delete="false" editable="bottom">
+                <field name="walking_count"/>
+                <field name="walking_date"/>
+                <field name="google_rating"/>
+                <field name="instagram_followers"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="walking_action" model="ir.actions.act_window">
+        <field name="name">Daily Interaction</field>
+        <field name="res_model">walking.walking</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <!--    MenuItems added in Crm Configuration-->
+
+    <menuitem id="menu_walking"
+              name="Daily Interaction" parent="crm.crm_menu_sales" action="walking_action"
+              sequence="21"/>
+</odoo>

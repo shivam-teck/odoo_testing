@@ -1,0 +1,16 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+import_product,import.product,model_import_product,,1,1,1,1
+import_product_price,import.product.price,model_import_product_price,,1,1,1,1
+import_vendor_pricelist,import.vendor.pricelist,model_import_vendor_pricelist,,1,1,1,1
+material_master,material.master,model_material_master,,1,1,1,1
+material_code,material.code,model_material_code,,1,1,1,1
+ftp_configuration,ftp.configuration,model_ftp_configuration,,1,1,1,1
+file_transfer_log,file.transfer.log,model_file_transfer_log,,1,1,1,1
+so_report,so.report,model_so_report,,1,1,1,1
+mtd_report,mtd.report,model_mtd_report,,1,1,1,1
+walking_walking,walking.walking,model_walking_walking,,1,1,1,1
+franchise_margin,franchise.margin,model_franchise_margin,,1,1,1,1
+franchise_product_category,franchise.product.category,model_franchise_product_category,,1,1,1,1
+sap_stock,sap.stock,model_sap_stock,,1,1,1,1
+company_mapping,company.mapping,model_company_mapping,,1,1,1,1
+

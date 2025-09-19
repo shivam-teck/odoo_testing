@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="material_master_view_form" model="ir.ui.view">
+        <field name="name">material.master.view.form</field>
+        <field name="model">material.master</field>
+        <field name="arch" type="xml">
+            <form string="Material Master">
+                <sheet>
+                    <group>
+                        <field name="material_group"/>
+                        <field name="material"/>
+                        <field name="material_description"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="material_master_view_list" model="ir.ui.view">
+        <field name="name">material.master.view.list</field>
+        <field name="model">material.master</field>
+        <field name="arch" type="xml">
+            <list string="Material Master">
+                <field name="material_group"/>
+                <field name="material"/>
+                <field name="material_description"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="material_master_action" model="ir.actions.act_window">
+        <field name="name">Material Master</field>
+        <field name="res_model">material.master</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <!--    MenuItems added in Crm Configuration-->
+
+
+    <menuitem id="menu_material_master"
+              name="Material Master" parent="sale.menu_sale_config" action="material_master_action"
+              sequence="21" groups="group_access_material_master"/>
+</odoo>

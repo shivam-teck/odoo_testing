@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="import_file_form_view" model="ir.ui.view">
+        <field name="name">import.file.form.view</field>
+        <field name="model">import.product</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+
+            <form>
+                <sheet>
+                    <group>
+                        <field name="upload_product_file"/>
+                    </group>
+                    <footer>
+                        <button name="import_product" string="Upload" type="object" class="btn-primary"
+                                data-hotkey="q"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                    </footer>
+                </sheet>
+            </form>
+
+        </field>
+    </record>
+
+    <record id="import_file_action" model="ir.actions.act_window">
+        <field name="name">Import Product</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">import.product</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="import_file_form_view"/>
+        <field name="target">new</field>
+    </record>
+
+
+    <menuitem id="menu_import_product" name="Import Product" sequence="10" parent="sale.product_menu_catalog"
+              action="custom_homes_to_life.import_file_action"
+              groups="custom_homes_to_life.group_access_product_import"/>
+
+    <!--for product price-->
+    <record id="import_price_file_form_view" model="ir.ui.view">
+        <field name="name">import.file.form.view</field>
+        <field name="model">import.product.price</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+
+            <form>
+                <sheet>
+                    <group>
+                        <field name="upload_product_price_file"/>
+                    </group>
+                    <footer>
+                        <button name="import_product_price" string="Upload" type="object" class="btn-primary"
+                                data-hotkey="q"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                    </footer>
+                </sheet>
+            </form>
+
+        </field>
+    </record>
+
+    <record id="import_price_file_action" model="ir.actions.act_window">
+        <field name="name">Import Product Price</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">import.product.price</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="import_price_file_form_view"/>
+        <field name="target">new</field>
+    </record>
+
+
+    <menuitem id="menu_import_product_price" name="Import Product Price" sequence="11" parent="sale.product_menu_catalog"
+              action="custom_homes_to_life.import_price_file_action"
+              groups="custom_homes_to_life.group_access_product_import"/>
+
+<!--    import picelist-->
+    <record id="import_pricelist_form_view" model="ir.ui.view">
+        <field name="name">import.pricelist.form.view</field>
+        <field name="model">import.vendor.pricelist</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+
+            <form>
+                <sheet>
+                    <group>
+                        <field name="upload_vendor_pricelist_file"/>
+                        <field name="company_id" options="{'no_create': True}"/>
+                    </group>
+                    <footer>
+                        <button name="import_pricelist" string="Upload" type="object" class="btn-primary"
+                                data-hotkey="q"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                    </footer>
+                </sheet>
+            </form>
+
+        </field>
+    </record>
+
+    <record id="import_pricelist_file_action" model="ir.actions.act_window">
+        <field name="name">Import Vendor Pricelist</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">import.vendor.pricelist</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="import_pricelist_form_view"/>
+        <field name="target">new</field>
+    </record>
+
+
+    <menuitem id="menu_import_vendor_pricelist" name="Import Vendor Price List" sequence="12" parent="sale.product_menu_catalog"
+              action="custom_homes_to_life.import_pricelist_file_action"
+              groups="custom_homes_to_life.group_access_product_import"/>
+</odoo>

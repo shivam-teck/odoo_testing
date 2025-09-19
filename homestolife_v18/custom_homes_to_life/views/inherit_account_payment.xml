@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="inherit_account_payments_form" model="ir.ui.view">
+            <field name="name">inherit.account.payment.form</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/header//button[@name='action_draft']" position="after">
+                    <button name="send_payment" string="Export To FTP" class="btn btn-primary" type="object"
+                            invisible="hide_send_to_ftp or send_to_ftp or state not in ('paid')"/>
+
+                </xpath>
+                <xpath expr="//form/sheet/group/group[1]/field[@name='memo']" position="after">
+                    <field name="payment_date_confirm"/>
+                    <field name="send_to_ftp" invisible="hide_send_to_ftp == True"/>
+                    <field name="hide_send_to_ftp" invisible="1 "/>
+                    <!--                    <field name="payment_date" invisible="1"/>-->
+                </xpath>
+            </field>
+        </record>
+        <record id="inherit_account_payment_tree_view" model="ir.ui.view">
+            <field name="name">inherit.account.payment.tree.view</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//list" position="inside">
+                    <!--                <header>-->
+                    <!--                    <button name="send_payment" string="Export To FTP" class="btn btn-primary" type="object"/>-->
+                    <!--                </header>-->
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

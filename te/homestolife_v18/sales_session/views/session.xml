@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="session_session_view_form" model="ir.ui.view">
+        <field name="name">session.session.form</field>
+        <field name="model">session.session</field>
+        <field name="arch" type="xml">
+            <form string="Material Master">
+                <header>
+                    <button name="start_session" string="Start Session" type="object"
+                            attrs="{'invisible': [('is_activated','=', True)]}"/>
+                    <button name="end_session" string="End Session" type="object"
+                            attrs="{'invisible': [('active_session', '=', False)]}"/>
+                </header>
+                <sheet>
+                    <div name="button_box" position="inside">
+                        <button class="oe_stat_button" type="object" name="get_so"
+                                icon="fa-bars">
+                            <field string="Quotation" name="so_count" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" type="object" name="get_confirm_so"
+                                icon="fa-bars">
+                            <field string="Sale Order" name="so_confirm_count" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" type="object" name="get_payment"
+                                icon="fa-bars">
+                            <field string="Payments" name="payment_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="session_no"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="active_session"/>
+                            <field name="opened_by" force_save="1" readonly="1"/>
+                            <field name="opening_date"/>
+                            <field name="closing_date"/>
+                            <field name="is_activated" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="starting_balance"/>
+                            <field name="ending_balance"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Sale Order">
+                            <field name="sale_order_ids" create="false" delete="0" style="pointer-events:none">
+                                <tree readonly="1" editable="bottom">
+                                    <field name="name"/>
+                                    <field name="date_order"/>
+                                    <field name="partner_id"/>
+                                    <field name="amount_total"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="session_session_view_tree" model="ir.ui.view">
+        <field name="name">session.session.tree</field>
+        <field name="model">session.session</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="session_no"/>
+                <field name="active_session"/>
+                <field name="opened_by" force_save="1"/>
+                <field name="opening_date"/>
+                <field name="closing_date"/>
+                <field name="starting_balance"/>
+                <field name="ending_balance"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="session_action" model="ir.actions.act_window">
+        <field name="name">Sessions</field>
+        <field name="res_model">session.session</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!--    MenuItems added in Crm Configuration-->
+
+
+    <menuitem id="menu_session_root"
+              name="Session"/>
+
+    <menuitem id="menu_session_action"
+              name="Session" parent="sales_session.menu_session_root" action="session_action"
+              sequence="2"/>
+</odoo>

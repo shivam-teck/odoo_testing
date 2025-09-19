@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="create_payment_wizard_view" model="ir.ui.view">
+        <field name="name">create.payment.wizard.view</field>
+        <field name="model">create.payment</field>
+        <field name="arch" type="xml">
+            <form>
+                <group class="oe_title">
+                    <group>
+                        <field name="journal_id" domain="[('type', 'in', ['bank','cash'])]" options="{'no_create': True}" required="1"/>
+                        <field name="payment_method_id" options="{'no_create':True}" required="1"/>
+                        <field name="amount" required="1"/>
+                    </group>
+                    <group>
+                        <field name="order_id" readonly="1" required="1"/>
+                        <field name="memo" required="1"/>
+                        <field name="payment_date" required="1"/>
+                        <field name="available_payment_method_line_ids" invisible="1"/>
+                        <field name="payment_type" invisible="1"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Create Payment" class="btn-primary" name="create_payment_so" type="object"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+
+    </record>
+
+    <record id="action_create_payment_wizard" model="ir.actions.act_window">
+        <field name="name">Create Payment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">create.payment</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="create_payment_wizard_view"/>
+        <field name="target">new</field>
+    </record>
+
+
+</odoo>

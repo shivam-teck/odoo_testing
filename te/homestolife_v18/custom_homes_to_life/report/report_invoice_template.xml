@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_invoice_document_custom" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[2]/div/t" position="before">
+            <div class="row">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr style="background-color: #f2f2f2; font-weight: bold;">
+                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left; background-color: #d3d3d3;">
+                            Bill To
+                        </th>
+                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left; background-color: #d3d3d3;">
+                            Ship To
+                        </th>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">
+                            <span t-field="o.partner_id.name"/>
+                            <br/>
+                            <span t-field="o.partner_id.street"/>
+                            <br/>
+                            <span t-field="o.partner_id.street2"/>
+                            <br/>
+                            <span t-field="o.partner_id.city"/>
+                            <span t-field="o.partner_id.zip"/>
+                            <br/>
+                            <span t-field="o.partner_id.state_id.name"/>
+                            <span t-field="o.partner_id.state_id.code"/>
+                            <br/>
+                            <span t-field="o.partner_id.country_id.name"/>
+                            <br/>
+                            <span>GSTIN:</span>
+                            <span t-field="o.partner_id.vat"/>
+                        </td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">
+                            <span t-field="o.partner_shipping_id.name"/>
+                            <br/>
+                            <span t-field="o.partner_shipping_id.street"/>
+                            <br/>
+                            <span t-field="o.partner_shipping_id.street2"/>
+                            <br/>
+                            <span t-field="o.partner_shipping_id.city"/>
+                            <span t-field="o.partner_shipping_id.zip"/>
+                            <br/>
+                            <span t-field="o.partner_shipping_id.state_id.name"/>
+                            <span t-field="o.partner_shipping_id.state_id.code"/>
+                            <br/>
+                            <span t-field="o.partner_shipping_id.country_id.name"/>
+                            <br/>
+                            <span>GSTIN:</span>
+                            <span t-field="o.partner_shipping_id.vat"/>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </xpath>
+
+        <!-- Hide the specified block -->
+
+        <xpath expr="//div[contains(@class, 'row')]" position="replace">
+            <div class="d-none"/>
+        </xpath>
+    </template>
+</odoo>

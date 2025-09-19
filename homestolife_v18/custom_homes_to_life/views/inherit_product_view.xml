@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="inherit_product_product_view" model="ir.ui.view">
+        <field name="name">Inherit Product</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group/group[2]/div/field[@name='lst_price']" position="attributes">
+                <attribute name="attrs">{}</attribute>
+            </xpath>
+            <xpath expr="//sheet/group/group[2]/field[@name='currency_id']" position="before">
+                <field name="mrp_price"/>
+                <field name="material_number"/>
+                <field name="material_description"/>
+                <!--                <field name="goods_type"/>-->
+
+            </xpath>
+            <xpath expr="//field[@name='lst_price']" position="replace">
+                <field name="lst_price" widget="monetary"
+                       options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="inherit_product_template_form_view" model="ir.ui.view">
+        <field name="name">Inherit Product Template</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook/page[@name='general_information']/group/group[2]/field[@name='categ_id']"
+                   position="after">
+                <field name="mrp_price"/>
+                <field name="material_number"/>
+                <field name="material_description"/>
+                <!--                <field name="goods_type"/>-->
+                <field name="is_case_good"/>
+                <field name="variant_count"/>
+                <field name="last_update"/>
+                <field name="is_all_companies_selected" invisible="1"/>
+                <!--                    <button name="compute_vendors" string="change vendors" class="btn btn-primary" type="object"/>-->
+            </xpath>
+<!--            <xpath expr="//header" position="inside">-->
+<!--                <button name="update_taxes" string="Your Button Label" type="object"-->
+<!--                        attrs="{'invisible': [('is_all_companies_selected', '=', False)]}"/>-->
+<!--            </xpath>-->
+        </field>
+    </record>
+    <record id="view_product_product_only_form_inherited" model="ir.ui.view">
+        <field name="name">product.template.only.form.inherited</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_code']" position="after">
+                <field name="internal_reference"/>
+            </xpath>
+            <xpath expr="//field[@name='tax_string']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//sheet/notebook/page/group/group[2]/div[1]//field[@name='list_price']" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </xpath>
+            <!--             <xpath expr="//sheet/notebook/page/group/group[2]/div[1]" position="attributes"> -->
+            <!--                 <attribute name="invisible">1</attribute> -->
+            <!--             </xpath> -->
+            <!--             <xpath expr="//sheet/notebook/page/group/group[2]/label[1]" position="attributes"> -->
+            <!--                 <attribute name="invisible">1</attribute> -->
+            <!--             </xpath> -->
+        </field>
+    </record>
+    <record id="action_compute_mrp" model="ir.actions.server">
+        <field name="name">Compute Mrp</field>
+        <field name="model_id" ref="product.model_product_product"/>
+        <field name="binding_model_id" ref="product.model_product_product"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.compute_mrp()</field>
+    </record>
+
+    <record id="action_compute_taxes" model="ir.actions.server">
+            <field name="name">Compute Taxes</field>
+            <field name="model_id" ref="product.model_product_template"/>
+            <field name="binding_model_id" ref="product.model_product_template"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.update_taxes()</field>
+    </record>
+
+    <record id="action_compute_default_code" model="ir.actions.server">
+            <field name="name">Compute Default Code</field>
+            <field name="model_id" ref="product.model_product_template"/>
+            <field name="binding_model_id" ref="product.model_product_template"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.compute_default_code()</field>
+    </record>
+
+</odoo>

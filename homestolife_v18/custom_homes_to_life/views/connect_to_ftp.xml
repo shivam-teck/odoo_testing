@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--    <record id="ftp_wizard_view_form" model="ir.ui.view">-->
+<!--        <field name="name">ftp.wizard.form</field>-->
+<!--        <field name="model">sale.order.ftp.wizard</field>-->
+<!--        <field name="arch" type="xml">-->
+
+<!--            <form>-->
+<!--                <sheet>-->
+<!--                    <button name="send_so" string="Send Data" type="object"/>-->
+<!--                </sheet>-->
+<!--            </form>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    <record id="ftp_wizard_action" model="ir.actions.act_window">-->
+<!--        <field name="name">Send Data To SAP</field>-->
+<!--        <field name="type">ir.actions.act_window</field>-->
+<!--        <field name="res_model">sale.order.ftp.wizard</field>-->
+<!--        <field name="view_mode">form</field>-->
+<!--        <field name="binding_model_id" ref="sales.model_sale_order"/>-->
+<!--        <field name="view_id" ref="ftp_wizard_view_form"/>-->
+<!--        <field name="target">new</field>-->
+<!--    </record>-->
+<!--    <menuitem id="test_model_wizard_menu_action"-->
+<!--              sequence="10"-->
+<!--              parent="sale.sale_menu_root"-->
+<!--              name="Wizard" action="ftp_wizard_action"/>-->
+
+<!--    <record id="create_payment_form" model="ir.ui.view">-->
+<!--        <field name="name">create.payment.form</field>-->
+<!--        <field name="model">sale.order</field>-->
+<!--        <field name="inherit_id" ref="sale.view_order_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//form//header//button[@id='action_confirm']" position="after">-->
+<!--                <button name="create_payments" string="Create Payments" type="object"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+
+
+</odoo>

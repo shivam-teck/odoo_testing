@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="so_report_tree" model="ir.ui.view">
+        <field name="name">so.report.tree</field>
+        <field name="model">so.report</field>
+        <field name="arch" type="xml">
+            <list editable="top" create="false">
+                <field name="lead_id" readonly="1"/>
+                <field name="expected_revenue" readonly="1"/>
+                <field name="lead_created_by" readonly="1"/>
+                <field name="lead_create_date" readonly="1"/>
+                <field name="sale_order_id" readonly="1"/>
+                <field name="so_customer" readonly="1"/>
+                <field name="so_stage" readonly="1"/>
+                <field name="so_price" readonly="1"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_so_report" model="ir.actions.act_window">
+        <field name="name">SO Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">so.report</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="so_report_tree"/>
+        <field name="target">fullscreen</field>
+    </record>
+    <record id="action_so_report_data" model="ir.actions.server">
+        <field name="name">Report Data</field>
+        <field name="model_id" ref="model_so_report"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.get_data()
+        </field>
+    </record>
+    <menuitem id="menu_crm_so_report"
+              name="Leads Report" parent="crm.crm_menu_report" action="action_so_report_data"
+              groups="custom_homes_to_life.group_access_report"
+              sequence="-1"/>
+</odoo>

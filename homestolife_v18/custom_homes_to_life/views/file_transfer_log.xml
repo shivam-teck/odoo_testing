@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="file_transfer_log_tree" model="ir.ui.view">
+        <field name="name">file.transfer.log.tree</field>
+        <field name="model">file.transfer.log</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sale_order" readonly="1"/>
+                <field name="so_id" readonly="1" optional="hide"/>
+                <field name="file_name" readonly="1"/>
+                <field name="status" readonly="1"/>
+                <field name="log_exception" readonly="True"/>
+                <field name="ftp_host" readonly="True"/>
+                <field name="export_time" readonly="1"/>
+            </list>
+        </field>
+    </record>
+    <record id="file_transfer_log_form" model="ir.ui.view">
+        <field name="name">file.transfer.log.form</field>
+        <field name="model">file.transfer.log</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="sale_order" readonly="True"/>
+                        <field name="file_name" readonly="True"/>
+                        <field name="status" readonly="True"/>
+                        <field name="log_exception" readonly="True"/>
+                        <field name="ftp_host" readonly="True"/>
+                        <field name="export_time" readonly="True"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_file_transfer_log" model="ir.actions.act_window">
+        <field name="name">File Transfer Log</field>
+        <field name="res_model">file.transfer.log</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Log.
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_file_transfer"
+              name="File Transfer Log"
+              action="custom_homes_to_life.action_file_transfer_log"
+              parent="sale.menu_sale_config"
+              sequence="0"/>
+
+</odoo>

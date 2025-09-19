@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_payments_by_term,payments_by_term,model_payments_by_term,base.group_user,1,1,1,1
+access_payment_wiz,payment_wiz,model_payment_wiz,base.group_user,1,1,1,1
+access_create_payment,create.payment,model_create_payment,base.group_user,1,1,1,1

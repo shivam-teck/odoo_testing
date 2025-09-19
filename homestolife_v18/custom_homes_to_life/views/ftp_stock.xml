@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="sap_stock_view_form" model="ir.ui.view">
+        <field name="name">sap.stock.view.form</field>
+        <field name="model">sap.stock</field>
+        <field name="arch" type="xml">
+            <form string="SAP Stock">
+                <header>
+                    <button name="fetch_details" string="Fetch Stock" type="object"/>
+
+                </header>
+
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="plant"/>
+                            <field name="storage_location"/>
+                            <field name="material_code"/>
+                            <field name="batch_no"/>
+                            <field name="configuration"/>
+                        </group>
+                        <group>
+                            <field name="front_article"/>
+                            <field name="back_article"/>
+                            <field name="quantity"/>
+                            <field name="sap_table"/>
+                            <field name="remarks"/>
+                            <field name="last_sink_time"/>
+                        </group>
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="sap_stock_view_tree" model="ir.ui.view">
+        <field name="name">sap.stock.view.tree</field>
+        <field name="model">sap.stock</field>
+        <field name="arch" type="xml">
+            <list>
+                 <header>
+                    <button name="fetch_details" string="Fetch Stock" type="object"/>
+                </header>
+                <field name="plant"/>
+                <field name="storage_location"/>
+                <field name="material_code"/>
+                <field name="batch_no"/>
+                <field name="configuration"/>
+                <field name="front_article"/>
+                <field name="back_article"/>
+                <field name="quantity"/>
+                <field name="sap_table"/>
+                <field name="remarks"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="sap_stock_action" model="ir.actions.act_window">
+        <field name="name">Sap Stock</field>
+        <field name="res_model">sap.stock</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <!--    MenuItems added in Crm Configuration-->
+
+
+    <menuitem id="menu_sap_stock_action"
+              name="SAP Stock" parent="sale.sale_order_menu" action="sap_stock_action"
+              sequence="51"/>
+</odoo>

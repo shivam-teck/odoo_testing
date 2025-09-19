@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="inherit_purchase_order_line_view" model="ir.ui.view">
+        <field name="name">inherit.purchase.order.line.view</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook//page/field[@name='order_line']/list/field[@name='taxes_id']"
+                   position="after">
+                <field name="additional_discount" invisible="1"/>
+                <field name="product_location_type" invisible="1"/>
+
+            </xpath>
+            <xpath expr="//notebook//page/field[@name='order_line']/list/field[@name='taxes_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//notebook//page/field[@name='order_line']/list/field[@name='name']"
+                   position="before">
+                <field name="article1" options="{'no_create': True,'no_open': 1}"
+                       attrs="{'required':[('is_case_good', '=', False)]}"/>
+
+                <field name="articletype_2" options="{'no_create': True, 'no_open': 1}"
+                       attrs="{'required':[('is_case_good', '=', False)]}"/>
+                <field name="is_case_good" invisible="0" optional="hide"/>
+                <field name="route_id" options="{'no_create': True}" required="1"/>
+                <field name="route" optional="hide" invisible="1"/>
+            </xpath>
+            <xpath expr="//sheet/group/group[1]/field[@name='currency_id']" position="after">
+                <field name="oc_no"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
